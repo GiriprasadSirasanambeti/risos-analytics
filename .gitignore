@@ -1,0 +1,9 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore environment files (if any)
+.env
+
+# Allow all other files in webapp/ to be tracked
+!*

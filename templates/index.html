@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISOS Analytics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #333
+        }
+        .chart {
+            margin: 20px 0;
+        }
+        .sales-data {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+    </style>
+</html>
+<body>
+    <h1>RISOS Sales Analytics</h1>
+    <div class="sales-data">
+        <h2>Sales Totals</h2>
+        {% for product, qty in total_sales.items() %}
+            <p>{{ product }}: {{ qty }} units</p>
+        {% endfor %}
+    </div>
+    <div class="chart">
+        <h2>Sales Chart</h2>
+        <img src="{{ url_for('static', filename='sales_chart.png') }}" alt="Sales Chart">
+    </div>
+</body>
