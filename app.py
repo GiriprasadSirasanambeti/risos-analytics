@@ -4,6 +4,8 @@ import matplotlib
 matplotlib.use('Agg')  #set the backend to Agg (non-GUI)
 import matplotlib.pyplot as plt
 import os
+import shutil
+import tempfile
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -21,17 +23,25 @@ def analyze_sales():
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         total_sales = df.groupby('product_id')['qty'].sum()
 
-        # Generate bar chart
+        # Generate bar chart in a temporary file
+        plt.figure()
         total_sales.plot(kind='bar', title="Sales by Product")
         plt.xlabel("Product ID")
         plt.ylabel("Units Sold")
-        plt.savefig(CHART_PATH)
+        temp_file = os.path.join(tempfile.gettempdir(), "sales_chart.png")
+        plt.savefig(temp_file)
         plt.close()
+
+        # Ensure the static directory exists and move the file
+        os.makedirs(os.path.dirname(CHART_PATH), exist_ok=True)
+        shutil.move(temp_file, CHART_PATH)
 
         conn.close()
         return total_sales.to_dict()    # Return as dict for rendering
     except Exception as e:
-        print(f"Analytics error: {e}")
+        print(f"Error Generating chart: {e}")
+        if 'conn' in locals():
+            conn.close()
         return None
 
 @app.route('/')
