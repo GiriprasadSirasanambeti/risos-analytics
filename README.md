@@ -14,4 +14,4 @@ A Flask-based web application for the Retail Inventory and Sales Optimization Sy
 4. Visit `http://127.0.0.1:5001/`.
 
 ## Deployment
-Deployed on Render: [Add URL after deployment]
+Deployed on Render: https://risos-analytics.onrender.com
